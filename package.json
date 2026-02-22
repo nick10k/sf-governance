@@ -1,20 +1,27 @@
 {
-  "name": "sf-governance",
+  "name": "10k-smart-automation-wizard",
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "build": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.77.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "fast-xml-parser": "^5.3.6",
     "jsforce": "^3.10.14",
+    "jszip": "^3.10.1",
     "pg": "^8.18.0"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 CREATE TABLE orgs (
     id            SERIAL PRIMARY KEY,
     name          TEXT NOT NULL,
-    instance_url  TEXT NOT NULL,
+    instance_url  TEXT NOT NULL UNIQUE,
     access_token  TEXT NOT NULL,
     refresh_token TEXT NOT NULL,
     created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()

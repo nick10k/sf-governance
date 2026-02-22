@@ -11,6 +11,7 @@ function createConnection(org) {
     instanceUrl: org.instance_url,
     accessToken: org.access_token,
     refreshToken: org.refresh_token,
+    version: '59.0',
   });
 
   // Persist refreshed tokens back to DB

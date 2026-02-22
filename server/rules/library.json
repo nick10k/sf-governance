@@ -1,0 +1,167 @@
+[
+  {
+    "id": "WFR001",
+    "layer": "platform",
+    "name": "Active Workflow Rule",
+    "description": "Workflow Rules are deprecated by Salesforce and scheduled for retirement. Active rules should be migrated to Record-Triggered Flows.",
+    "severity": "error",
+    "check_type": "per_item",
+    "applies_to": ["Workflow Rule"],
+    "recommendation_template": "Migrate the active Workflow Rule '{{api_name}}' on {{object_name}} to a Record-Triggered Flow.",
+    "remediation_pattern": "wfr_to_flow"
+  },
+  {
+    "id": "WFR002",
+    "layer": "platform",
+    "name": "Inactive Workflow Rule",
+    "description": "Even inactive Workflow Rules will be removed when Salesforce retires the feature. Migrate or delete this rule.",
+    "severity": "warning",
+    "check_type": "per_item",
+    "applies_to": ["Workflow Rule"],
+    "recommendation_template": "Migrate or delete the inactive Workflow Rule '{{api_name}}' on {{object_name}} before Salesforce retires the feature.",
+    "remediation_pattern": "wfr_to_flow"
+  },
+  {
+    "id": "WFR003",
+    "layer": "platform",
+    "name": "Workflow Rule with Outbound Message",
+    "description": "Outbound Messages are also being retired by Salesforce. Workflow Rules containing Outbound Message actions need to be replaced with Flows using external service callouts.",
+    "severity": "error",
+    "check_type": "per_item",
+    "applies_to": ["Workflow Rule"],
+    "recommendation_template": "Replace Workflow Rule '{{api_name}}' and its Outbound Message action on {{object_name}} with a Record-Triggered Flow using an external service callout.",
+    "remediation_pattern": "wfr_outbound_to_flow"
+  },
+  {
+    "id": "PB001",
+    "layer": "platform",
+    "name": "Active Process Builder",
+    "description": "Process Builder is deprecated by Salesforce. Active processes should be migrated to Flows.",
+    "severity": "error",
+    "check_type": "per_item",
+    "applies_to": ["Process Builder"],
+    "recommendation_template": "Migrate the active Process Builder '{{api_name}}' to a Flow.",
+    "remediation_pattern": "pb_to_flow"
+  },
+  {
+    "id": "PB002",
+    "layer": "platform",
+    "name": "Inactive Process Builder",
+    "description": "Even inactive Process Builders will be affected when Salesforce retires the feature. Migrate or delete this process.",
+    "severity": "warning",
+    "check_type": "per_item",
+    "applies_to": ["Process Builder"],
+    "recommendation_template": "Migrate or delete the inactive Process Builder '{{api_name}}' before Salesforce retires the feature.",
+    "remediation_pattern": "pb_to_flow"
+  },
+  {
+    "id": "DESC001",
+    "layer": "quality",
+    "name": "Missing Description",
+    "description": "Active automations without descriptions are harder to maintain and audit. All active, non-managed automations should have a description explaining their purpose.",
+    "severity": "warning",
+    "check_type": "per_item",
+    "applies_to": ["Workflow Rule", "Record-Triggered Flow", "Autolaunched Flow", "Screen Flow", "Process Builder", "Apex Trigger"],
+    "recommendation_template": "Add a description to '{{api_name}}' explaining its purpose and business context.",
+    "remediation_pattern": "add_description"
+  },
+  {
+    "id": "NAME001",
+    "layer": "quality",
+    "name": "Naming Convention Violation",
+    "description": "Automation API names do not follow the org's configured naming convention. Consistent naming improves discoverability and maintainability.",
+    "severity": "warning",
+    "check_type": "per_item",
+    "applies_to": [],
+    "recommendation_template": "Rename '{{api_name}}' to match the org naming convention.",
+    "remediation_pattern": "rename"
+  },
+  {
+    "id": "FLOW001",
+    "layer": "quality",
+    "name": "Record-Triggered Flow Missing Object",
+    "description": "A Record-Triggered Flow has no associated object, which indicates a misconfiguration — it will not trigger as expected.",
+    "severity": "warning",
+    "check_type": "per_item",
+    "applies_to": ["Record-Triggered Flow"],
+    "recommendation_template": "Review '{{api_name}}' — it is a Record-Triggered Flow but has no object configured.",
+    "remediation_pattern": "review_flow_config"
+  },
+  {
+    "id": "MULTI001",
+    "layer": "risk",
+    "name": "Multiple Active Flows on Same Object and Event",
+    "description": "Multiple active Record-Triggered Flows firing on the same object and trigger event can cause ordering issues, data conflicts, and governor limit errors.",
+    "severity": "warning",
+    "check_type": "cross_item",
+    "applies_to": [],
+    "recommendation_template": "",
+    "remediation_pattern": "consolidate_flows"
+  },
+  {
+    "id": "MULTI002",
+    "layer": "risk",
+    "name": "Apex Trigger and Flow on Same Object",
+    "description": "An active Apex Trigger and a Record-Triggered Flow both operate on the same object. This creates implicit ordering dependencies and can lead to unexpected behavior.",
+    "severity": "info",
+    "check_type": "cross_item",
+    "applies_to": [],
+    "recommendation_template": "",
+    "remediation_pattern": "document_interaction"
+  },
+  {
+    "id": "MULTI003",
+    "layer": "risk",
+    "name": "Multiple Active Apex Triggers on Same Object",
+    "description": "Multiple Apex Triggers on the same object fire in an undefined order. This is dangerous — consolidate them into a single trigger handler pattern.",
+    "severity": "error",
+    "check_type": "cross_item",
+    "applies_to": [],
+    "recommendation_template": "",
+    "remediation_pattern": "consolidate_triggers"
+  },
+  {
+    "id": "MULTI004",
+    "layer": "risk",
+    "name": "Workflow Rule and Flow on Same Object",
+    "description": "An active Workflow Rule and an active Flow both operate on the same object, creating redundant and potentially conflicting automation.",
+    "severity": "warning",
+    "check_type": "cross_item",
+    "applies_to": [],
+    "recommendation_template": "",
+    "remediation_pattern": "consolidate_automation"
+  },
+  {
+    "id": "APEX001",
+    "layer": "risk",
+    "name": "Active Apex Trigger",
+    "description": "Apex Triggers are powerful but require developer expertise to maintain. Ensure each trigger is documented and owned by a developer on the team.",
+    "severity": "info",
+    "check_type": "per_item",
+    "applies_to": ["Apex Trigger"],
+    "recommendation_template": "Document the purpose of Apex Trigger '{{api_name}}' on {{object_name}} and confirm a developer owner.",
+    "remediation_pattern": "document_trigger"
+  },
+  {
+    "id": "INACT001",
+    "layer": "housekeeping",
+    "name": "Inactive Non-Managed Automation",
+    "description": "Inactive automations that are not part of a managed package add clutter and confusion. Consider deleting them if no longer needed.",
+    "severity": "info",
+    "check_type": "per_item",
+    "applies_to": [],
+    "recommendation_template": "Review '{{api_name}}' — it is inactive. Delete it if it is no longer needed.",
+    "remediation_pattern": "delete_or_activate"
+  },
+  {
+    "id": "PKG001",
+    "layer": "housekeeping",
+    "name": "Managed Package Automation",
+    "description": "This automation is part of a managed (AppExchange) package. It cannot be edited directly. Ensure the package is still needed and up to date.",
+    "severity": "info",
+    "check_type": "per_item",
+    "applies_to": [],
+    "recommendation_template": "Verify that the managed package automation '{{api_name}}' is still required and the package is current.",
+    "remediation_pattern": "review_package"
+  }
+]
