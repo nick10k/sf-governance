@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-const migrate = require('./migrate');
 const authRoutes = require('./routes/auth');
 const accountRoutes = require('./routes/accounts');
 const orgRoutes = require('./routes/orgs');
@@ -32,14 +30,5 @@ app.get('/api/progress/:jobId', (req, res) => {
   res.json(job);
 });
 
-// Serve built React app
-const distPath = path.join(__dirname, '../client/dist');
-app.use(express.static(distPath));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
-
 const PORT = process.env.PORT || 3001;
-migrate()
-  .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
-  .catch(err => { console.error('Migration failed:', err); process.exit(1); });
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
